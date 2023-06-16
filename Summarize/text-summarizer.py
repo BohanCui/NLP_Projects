@@ -5,7 +5,8 @@ from nltk.corpus import stopwords
 from nltk.cluster.util import cosine_distance
 import numpy as np
 import networkx as nx
- 
+
+#先读长文，分离橘子 
 def read_article(file_name):
     file = open(file_name, "r")
     filedata = file.readlines()
@@ -19,6 +20,7 @@ def read_article(file_name):
     
     return sentences
 
+#用vector来define一个数值来判断哪些句子可以省略不记
 def sentence_similarity(sent1, sent2, stopwords=None):
     if stopwords is None:
         stopwords = []
@@ -44,8 +46,8 @@ def sentence_similarity(sent1, sent2, stopwords=None):
         vector2[all_words.index(w)] += 1
  
     return 1 - cosine_distance(vector1, vector2)
- 
-def build_similarity_matrix(sentences, stop_words):
+
+def build_sim_matrix(sentences, stop_words):
     # Create an empty similarity matrix
     similarity_matrix = np.zeros((len(sentences), len(sentences)))
  
@@ -58,30 +60,27 @@ def build_similarity_matrix(sentences, stop_words):
     return similarity_matrix
 
 
+#整合成一个大纲
 def generate_summary(file_name, top_n=5):
     nltk.download("stopwords")
     stop_words = stopwords.words('english')
     summarize_text = []
 
-    # Step 1 - Read text anc split it
     sentences =  read_article(file_name)
-
-    # Step 2 - Generate Similary Martix across sentences
-    sentence_similarity_martix = build_similarity_matrix(sentences, stop_words)
-
-    # Step 3 - Rank sentences in similarity martix
-    sentence_similarity_graph = nx.from_numpy_array(sentence_similarity_martix)
-    scores = nx.pagerank(sentence_similarity_graph)
-
-    # Step 4 - Sort the rank and pick top sentences
+    sentence_sim_martix = build_sim_matrix(sentences, stop_words)
+    #rank sim level 
+    sentence_sim_graph = nx.from_numpy_array(sentence_sim_martix)
+    scores = nx.pagerank(sentence_sim_graph)
+ 
+    #Sort rank and pick the top sentences
     ranked_sentence = sorted(((scores[i],s) for i,s in enumerate(sentences)), reverse=True)    
     print("Indexes of top ranked_sentence order are ", ranked_sentence)    
 
     for i in range(top_n):
       summarize_text.append(" ".join(ranked_sentence[i][1]))
 
-    # Step 5 - Offcourse, output the summarize text
     print("Summarize Text: \n", ". ".join(summarize_text))
 
-# let's begin
-generate_summary( "msft.txt", 2)
+#实验
+generate_summary( "msft.txt", 3)
+generate_summary("chatGPT.txt",3)
