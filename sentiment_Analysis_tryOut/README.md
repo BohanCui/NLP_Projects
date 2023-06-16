@@ -20,4 +20,4 @@ In order to get a deeper understanding of people’s opinions about video game/f
 
 ## Dataset
 
-The Amazon review dataset can be downloaded from [here](https://nijianmo.github.io/amazon/index.html). Download the zipped json file of the category of video games 5 core and fashion, which can be found under the title Small subsets for experimentation. Once the download is complete, simply extract the file.
+The Amazon review dataset can be downloaded from [here](https://nijianmo.github.io/amazon/index.html). Download the zipped json file of the category of video games 5 core(too large to upload here), which can be found under the title Small subsets for experimentation. Once the download is complete, simply extract the file.
