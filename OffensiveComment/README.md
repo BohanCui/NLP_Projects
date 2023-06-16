@@ -1,4 +1,4 @@
-#This is where I wish to predict the offensive or say, the toxic user comments using techniques from NLP.
+# This is where I wish to predict the offensive or say, the toxic user comments using techniques from NLP.
 
 ### The idea of this problem is taken from "Jigsaw Unintended Bias in Toxicity Classification" competition on Kaggle.
 
