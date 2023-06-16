@@ -84,3 +84,4 @@ def generate_summary(file_name, top_n=5):
 #实验
 generate_summary( "msft.txt", 3)
 generate_summary("ChatGPT.txt",3)
+generate_summary("bilibili.txt",5)
